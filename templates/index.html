@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sentiment Analyze</title>
+  <style>
+    body {
+      background-color: #333;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .container {
+      margin-top: 80px;
+    }
+
+    .btn {
+      background-color: #555;
+      color: #fff;
+      padding: 12px 20px;
+      text-decoration: none;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    .btn:hover {
+      background-color: #777;
+    }
+
+    #manualTweetForm {
+      display: none;
+      margin: 20px auto;
+      max-width: 600px;
+      background-color: #444;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .result-container {
+      margin: 20px auto;
+      max-width: 600px;
+      background-color: #444;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #888;
+      margin-top: 20px;
+    }
+  </style>
+
+  <script>
+    function showManualTweetForm() {
+      const formDiv = document.getElementById('manualTweetForm');
+      formDiv.style.display = 'block';
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Tweet Sentiment Analysis & Visualization</h1>
+    <div>
+      <button class="btn" onclick="location.href='/random_tweet'">Get a Random Tweet</button>
+      <button class="btn" onclick="showManualTweetForm()">Write your own tweet</button>
+    </div>
+    <div id="manualTweetForm">
+      <h2>Enter Your Tweet</h2>
+      <form action="/manual_tweet" method="POST">
+        <input type="text" name="user_tweet" placeholder="Type your tweet here" size="40" />
+        <button type="submit" class="btn">Analyze & Visualize</button>
+      </form>
+    </div>
+    {% if tweet_text and sentiment %}
+    <div class="result-container">
+      <h2>Analysis Result</h2>
+      <p><strong>Tweet:</strong> {{ tweet_text }}</p>
+      <p><strong>Sentiment:</strong> {{ sentiment }}</p>
+      {% if image_data %}
+      <img src="data:image/png;base64,{{ image_data }}" alt="Abstract Visualization" />
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
